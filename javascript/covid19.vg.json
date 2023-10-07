@@ -3,15 +3,31 @@
   "title": "Total COVID-19 Cases per 1 Million People in 2020",
   "width": 800,
   "height": 500,
+  "params":[{
+    "name": "Year_selection",
+    "value": 2000,
+    "bind": {
+    "input": "range",
+    "min": 2000,
+    "max": 2020,
+    "step": 1,
+    "name": "Year: "
+    }
+  }
+  ],
+ 
   "data": {
     "url": "https://raw.githubusercontent.com/teck-san/FIT3179/main/javascript/worldmap.topojson",
     "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
   },
+  
   "projection": {"type": "equalEarth"},
   "layer":[
     {
       "transform": [
         {"calculate": "'Data is not available for ' + datum.properties.NAME", "as": "note"}
+        
+
       ],
       "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
       "encoding": {
@@ -22,40 +38,47 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/teck-san/FIT3179/main/javascript/worldmap.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+        "url": "https://raw.githubusercontent.com/teck-san/FIT3179-homework-10/main/data/global-data-on-sustainable-energy.csv"
+        
       },
       "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
     },
     {
       "transform": [
         {
-          "lookup": "properties.NAME",
+          
+          "lookup": "Entity",
           "from": {
             "data": {
-              "url": "https://raw.githubusercontent.com/teck-san/FIT3179/main/data/worldometer_data.csv"
+              "url": "https://raw.githubusercontent.com/teck-san/FIT3179/main/javascript/worldmap.topojson",
+              "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
             },
-            "key": "Country/Region",
-            "fields": ["Tot Cases/1M pop"]
-          }
-        }
+            "key": "properties.NAME_LONG"
+            
+          },
+          "as": "geo"
+        }, 
+        {"filter": "datum.Year == Year_selection"}
       ],
       "mark": {"type": "geoshape", "stroke": "white"},
       "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"},
         "color": {
-          "title": "Total Cases per 1M Population",
-          "field": "Tot Cases/1M pop",
+          "title": "Percentage of population with access to electricity",
+          "field": "Access to electricity (% of population)",
           "type": "quantitative",
           "scale": {
             "type": "threshold",
-            "domain": [100, 1000, 10000, 100000],
+            "domain": [25, 50, 75, 100],
             "range": ["#99CCFF", "#3399FF", "#0000FF", " #000099","#000033"]  
           }
 
         },
         "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-          {"field": "Tot Cases/1M pop", "type": "quantitative" ,"title": "Total Cases per 1M Population"}
+          {"field": "properties.NAME_LONG", "type": "nominal", "title": "Country"},
+          {"field": "Access to electricity (% of population)", "type": "quantitative" ,"title": "Percentage of population with access to electricity"}
         ]
       }
     }
