@@ -37,7 +37,7 @@
         "type": "quantitative",
         "axis": {"tickCount": 7},
         "scale": {"type": "sqrt","domain": [0, 5500]}},
-        "color": {"field": "region", "type": "nominal"},
+        "color": {"field": "region", "type": "nominal","title":"Region"},
         "opacity": {"value": 0.6}
     },
     "layer":[
