@@ -45,6 +45,7 @@
     "encoding": {
       
       "size": {
+        "title":"Low-carbon electricity percentage",
         "field": "Low-carbon electricity (% electricity)",
         "type": "quantitative",
         "scale": {
@@ -74,7 +75,7 @@
       "color": {"value": "black"},
       "opacity": {
       "condition": {
-      "test": "datum.Entity == 'China' || datum['Entity'] == 'Malaysia' || datum['Entity'] == 'Australia' || datum['Entity'] == 'United States'",
+      "test": "datum.Entity == 'China' || datum['Entity'] == 'Japan' || datum['Entity'] == 'India' || datum['Entity'] == 'United States'",
       "value": 1
       },
       "value": 0
